@@ -58,7 +58,7 @@ class TestBooksCollector:
         assert len(collector.get_books_for_children()) == 3
 
     #проверка добавления книги в избранное из списка book_genre
-    def test_add_book_in_favorites_add_two_book(self, collector):
+    def test_add_book_in_favorites_add_book(self, collector):
         collector.add_book_in_favorites(zomby_book)
         assert len(collector.get_list_of_favorites_books()) == 1
 
