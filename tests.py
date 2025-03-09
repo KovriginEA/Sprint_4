@@ -1,6 +1,7 @@
 from main import BooksCollector
 
 zomby_book = 'Гордость и предубеждение и зомби'
+cat_killer_book = 'Что делать, если ваш кот хочет вас убить'
 
 class TestBooksCollector:
 
@@ -9,7 +10,7 @@ class TestBooksCollector:
     # дальше идет название метода, который тестируем add_new_book_
     # затем, что тестируем add_two_books - добавление двух книг
     def test_add_new_book_add_two_books(self, collector):
-        collector.add_new_book('Что делать, если ваш кот хочет вас убить')
+        collector.add_new_book(cat_killer_book)
         assert len(collector.get_books_genre()) == 2
 
     #проверка добавления книг с одинаковыми названиями
@@ -34,8 +35,8 @@ class TestBooksCollector:
     #проверка получения книг с жанром Комедии
     def test_get_books_with_specific_genry_comedy(self, collector):
         collector.set_book_genre(zomby_book, 'Комедии')
-        collector.add_new_book('Что делать, если ваш кот хочет вас убить')
-        collector.set_book_genre('Что делать, если ваш кот хочет вас убить', 'Ужасы')
+        collector.add_new_book(cat_killer_book)
+        collector.set_book_genre(cat_killer_book, 'Ужасы')
         collector.add_new_book('Жизненно важный вопрос')
         collector.set_book_genre('Жизненно важный вопрос', 'Детективы')
         assert collector.get_books_with_specific_genre('Комедии') == [zomby_book]
@@ -44,8 +45,8 @@ class TestBooksCollector:
     def test_get_books_for_children_return_three_books(self, collector):
         collector.set_book_genre(zomby_book, collector.genre[0])
 
-        collector.add_new_book('Что делать, если ваш кот хочет вас убить')
-        collector.set_book_genre('Что делать, если ваш кот хочет вас убить', collector.genre[1])
+        collector.add_new_book(cat_killer_book)
+        collector.set_book_genre(cat_killer_book, collector.genre[1])
         collector.add_new_book('Жизненно важный вопрос')
         collector.set_book_genre('Жизненно важный вопрос', collector.genre[2])
         collector.add_new_book('Дорога в будущее')
