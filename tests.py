@@ -1,3 +1,5 @@
+import pytest
+
 from main import BooksCollector
 
 zomby_book = 'Гордость и предубеждение и зомби'
@@ -27,9 +29,10 @@ class TestBooksCollector:
         collector.set_book_genre(zomby_book,collector.genre[0])
         assert collector.get_book_genre(zomby_book) == collector.genre[0]
 
-    #проверка что нельзя поставить жанр драма
-    def test_set_book_genre_dramma_is_not_allow(self, collector):
-        collector.set_book_genre(zomby_book, 'Драма')
+    #проверка что нельзя поставить недопустимый жанр
+    @pytest.mark.parametrize('my_genre',['Биография', 'Раскраска', 'Исторический'])
+    def test_set_book_genre_dramma_is_not_allow(self, collector, my_genre):
+        collector.set_book_genre(zomby_book, my_genre)
         assert collector.get_book_genre(zomby_book) == ''
 
     #проверка получения книг с жанром Комедии
@@ -44,7 +47,6 @@ class TestBooksCollector:
     #проверка получения книг для детей
     def test_get_books_for_children_return_three_books(self, collector):
         collector.set_book_genre(zomby_book, collector.genre[0])
-
         collector.add_new_book(cat_killer_book)
         collector.set_book_genre(cat_killer_book, collector.genre[1])
         collector.add_new_book('Жизненно важный вопрос')
@@ -55,7 +57,7 @@ class TestBooksCollector:
         collector.set_book_genre('Ход царем', collector.genre[4])
         assert len(collector.get_books_for_children()) == 3
 
-    #проверка добавления книги в избранное
+    #проверка добавления книги в избранное из списка book_genre
     def test_add_book_in_favorites_add_two_book(self, collector):
         collector.add_book_in_favorites(zomby_book)
         assert len(collector.get_list_of_favorites_books()) == 1
@@ -66,10 +68,11 @@ class TestBooksCollector:
         collector.add_book_in_favorites(zomby_book)
         assert len(collector.get_list_of_favorites_books()) == 1
 
-    #проверка что нельзя добавлять книгу не из списка books_genre
-    def test_add_book_in_favorites_book_not_in_list_genre_notallowed(self):
+    #проверка что нельзя добавлять книгу в избранное не из списка books_genre
+    @pytest.mark.parametrize('book_not_in_genre', ['MMA for dog', 'I love winter', 'Corban Dallas'])
+    def test_add_book_in_favorites_book_not_in_list_genre_notallowed(self, book_not_in_genre)  :
         collector = BooksCollector()
-        collector.add_book_in_favorites(zomby_book)
+        collector.add_book_in_favorites(book_not_in_genre)
         assert len(collector.get_list_of_favorites_books()) == 0
 
     #проверка удаления книги из избранного
