@@ -60,7 +60,7 @@ class TestBooksCollector:
     #проверка добавления книги в избранное из списка book_genre
     def test_add_book_in_favorites_add_book(self, collector):
         collector.add_book_in_favorites(zomby_book)
-        assert len(collector.get_list_of_favorites_books()) == 1
+        assert collector.get_list_of_favorites_books() == [zomby_book]
 
     #проверка что одну книгу нельзя повторно добавить в избранное
     def test_add_book_in_favorites_twice_add_one_book(self, collector):
