@@ -29,9 +29,17 @@ class TestBooksCollector:
         collector.set_book_genre(zomby_book,collector.genre[0])
         assert collector.get_book_genre(zomby_book) == collector.genre[0]
 
+    #проверка получения жанра книги
+    @pytest.mark.parametrize('allowed_genre', ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии'])
+    def test_get_book_genry_there_genry_from_allowed_list(self, allowed_genre):
+        collector = BooksCollector()
+        collector.books_genre[zomby_book] = allowed_genre
+        assert collector.get_book_genre(zomby_book) == allowed_genre
+
+
     #проверка что нельзя поставить недопустимый жанр
     @pytest.mark.parametrize('my_genre',['Биография', 'Раскраска', 'Исторический'])
-    def test_set_book_genre_dramma_is_not_allow(self, collector, my_genre):
+    def test_set_book_genre_there_genre_not_in_list_is_not_allow(self, collector, my_genre):
         collector.set_book_genre(zomby_book, my_genre)
         assert collector.get_book_genre(zomby_book) == ''
 
@@ -57,8 +65,8 @@ class TestBooksCollector:
         collector.set_book_genre('Ход царем', collector.genre[4])
         assert len(collector.get_books_for_children()) == 3
 
-    #проверка добавления книги в избранное из списка book_genre
-    def test_add_book_in_favorites_add_book(self, collector):
+    #проверка добавления одной книги в избранное из списка book_genre
+    def test_add_book_in_favorites_add_one_book_succesfuly(self, collector):
         collector.add_book_in_favorites(zomby_book)
         assert collector.get_list_of_favorites_books() == [zomby_book]
 
